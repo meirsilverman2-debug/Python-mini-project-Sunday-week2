@@ -41,5 +41,13 @@ def get_task_by_id_service(task_id: int):
 
         return None
 
+
+def update_task_service(task_id: int, task_data: dict):
     
+    for task in tasks_mock:
+        if task["id"] == task_id:
+            task.update(task_data) 
+            return task
+
+    return None  
 

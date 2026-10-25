@@ -1,9 +1,8 @@
 from fastapi import APIRouter, status, HTTPException
-from models.task_model import TaskCreate
-from controllers.task_controllers import get_tasks_ctrl, create_task_ctrl, get_task_by_id_cotrl
+from models.task_model import TaskCreate, TaskUpdate
+from controllers.task_controllers import get_tasks_ctrl, create_task_ctrl, get_task_by_id_cotrl, update_task_ctrl
 
 router = APIRouter()
-
 
 
 # GET all tasks:
@@ -31,3 +30,18 @@ def get_task_by_id_route(task_id: int):
         )
 
     return task
+
+
+# PUT/PATCH a task meaning update:
+@router.patch("/tasks/{task_id}")
+def update_task_route(task_id: int, task_data: TaskUpdate):
+
+    updated_task = update_task_ctrl(task_id, task_data.model_dump(exclude_unset=True))
+
+    if updated_task is None:
+        raise HTTPException(
+            status_code=404,
+            details="Task not found",
+        )
+
+    return updated_task
