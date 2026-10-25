@@ -32,3 +32,14 @@ def create_task_service(task):
     tasks_mock.append(new_task)
 
     return new_task
+
+
+def get_task_by_id_service(task_id: int):
+    for task in tasks_mock:
+        if task["id"] == task_id:
+            return task
+
+        return None
+
+    
+
