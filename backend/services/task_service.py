@@ -51,3 +51,12 @@ def update_task_service(task_id: int, task_data: dict):
 
     return None  
 
+
+def delete_task_service(task_id: int):
+
+    for task in tasks_mock:
+        if task["id"] == task_id:
+            tasks_mock.remove(task)
+            return task
+
+    return None
