@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 from models.task_model import TaskCreate, TaskUpdate
-from controllers.task_controllers import get_tasks_ctrl, create_task_ctrl, get_task_by_id_cotrl, update_task_ctrl
+from controllers.task_controllers import get_tasks_ctrl, create_task_ctrl, get_task_by_id_cotrl, update_task_ctrl, delete_task_ctrl
 
 router = APIRouter()
 
@@ -45,3 +45,22 @@ def update_task_route(task_id: int, task_data: TaskUpdate):
         )
 
     return updated_task
+
+# DELETE one task by id:
+@router.delete("/tasks/{task_id}")
+def delete_task_route(task_id: int):
+
+    deleted_task = delete_task_ctrl(task_id)
+
+    if deleted_task is None:
+        raise HTTPException(
+            status=404,
+            details="Tsak not found",
+        )
+
+
+    return{
+        "Message": "Task deleted successfuly",
+        "task": deleted_task,
+    }
+
